@@ -259,7 +259,7 @@ padding: 1rem 1.25rem;
 margin-bottom: 0.5rem;
 }
 .mobile-nav-links a {
-display: block;
+display: flex;
 padding: 1rem 1.25rem;
 text-decoration: none;
 color: var(--text-dark);
@@ -268,7 +268,6 @@ font-size: 1.1rem;
 border-radius: 8px;
 transition: all 0.3s ease;
 min-height: 50px;
-display: flex;
 align-items: center;
 gap: 0.75rem;
 }
@@ -356,9 +355,8 @@ text-decoration: none;
 font-weight: 600;
 font-size: 1rem;
 transition: all 0.3s ease;
-display: inline-block;
+display: inline-flex;
 min-height: 50px;
-display: flex;
 align-items: center;
 justify-content: center;
 }
@@ -380,38 +378,257 @@ background: var(--white);
 color: var(--primary-blue);
 }
 
-/* Trust Badges */
-.trust-badges {
-background: var(--off-white);
-padding: 2.5rem 1.25rem;
-border-top: 1px solid var(--border-gray);
+/* =============================================
+   CAROUSEL SECTION (replaces trust badges)
+   ============================================= */
+.carousel-section {
+position: relative;
+width: 100%;
+overflow: hidden;
+background: #0d1a2e;
+height: 480px;
 }
-.trust-content {
-max-width: 1400px;
-margin: 0 auto;
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-gap: 1.5rem;
+
+.carousel-track {
+display: flex;
+height: 100%;
+transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+will-change: transform;
 }
-.badge {
-text-align: center;
-padding: 1.5rem 1rem;
-background: var(--white);
-border-radius: 12px;
-box-shadow: 0 4px 15px rgba(0, 71, 171, 0.1);
+
+.carousel-slide {
+min-width: 100%;
+height: 100%;
+position: relative;
+display: flex;
+align-items: center;
+overflow: hidden;
 }
-.badge-icon {
-font-size: 2rem;
-margin-bottom: 0.5rem;
+
+/* Image placeholder backgrounds — one per slide */
+.carousel-slide:nth-child(1) .slide-bg {
+background: linear-gradient(135deg, #1a2a1a 0%, #2d4a2d 40%, #1c3a1c 100%);
 }
-.badge h3 {
-font-size: 1rem;
-color: var(--primary-blue);
-margin-bottom: 0.35rem;
+.carousel-slide:nth-child(2) .slide-bg {
+background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4a 40%, #1a1a3a 100%);
 }
-.badge p {
-color: var(--text-gray);
+.carousel-slide:nth-child(3) .slide-bg {
+background: linear-gradient(135deg, #2e1a0a 0%, #4a2d10 40%, #3a1f08 100%);
+}
+.carousel-slide:nth-child(4) .slide-bg {
+background: linear-gradient(135deg, #1a1a1a 0%, #2e2e3e 40%, #1a1f2e 100%);
+}
+
+.slide-bg {
+position: absolute;
+inset: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+/* The image placeholder visual */
+.slide-image-placeholder {
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 1rem;
+position: relative;
+overflow: hidden;
+}
+
+/* Decorative pattern overlay */
+.slide-image-placeholder::before {
+content: '';
+position: absolute;
+inset: 0;
+background-image:
+repeating-linear-gradient(
+  0deg,
+  transparent,
+  transparent 40px,
+  rgba(255,255,255,0.015) 40px,
+  rgba(255,255,255,0.015) 41px
+),
+repeating-linear-gradient(
+  90deg,
+  transparent,
+  transparent 40px,
+  rgba(255,255,255,0.015) 40px,
+  rgba(255,255,255,0.015) 41px
+);
+}
+
+.placeholder-icon {
+font-size: 6rem;
+opacity: 0.18;
+filter: grayscale(30%);
+line-height: 1;
+}
+
+.placeholder-label {
+font-family: 'Space Grotesk', sans-serif;
 font-size: 0.85rem;
+font-weight: 600;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: rgba(255,255,255,0.25);
+border: 1px solid rgba(255,255,255,0.12);
+padding: 0.4rem 1rem;
+border-radius: 4px;
+}
+
+/* Accent shapes */
+.slide-accent-circle {
+position: absolute;
+border-radius: 50%;
+opacity: 0.06;
+}
+
+/* Slide overlay gradient for text readability */
+.slide-overlay {
+position: absolute;
+inset: 0;
+background: linear-gradient(
+  to right,
+  rgba(0,0,0,0.75) 0%,
+  rgba(0,0,0,0.5) 45%,
+  rgba(0,0,0,0.1) 100%
+);
+}
+
+/* Slide text content */
+.slide-content {
+position: relative;
+z-index: 2;
+padding: 3rem 3rem 3rem 4rem;
+max-width: 580px;
+color: #fff;
+}
+
+.slide-tag {
+display: inline-block;
+font-size: 0.72rem;
+font-weight: 700;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+padding: 0.35rem 0.9rem;
+border-radius: 20px;
+margin-bottom: 1.1rem;
+}
+
+.slide-tag.steel    { background: rgba(74,85,104,0.85); color: #a0aec0; border: 1px solid rgba(160,174,192,0.3); }
+.slide-tag.electric { background: rgba(255,193,7,0.15);  color: #ffd54f; border: 1px solid rgba(255,213,79,0.3); }
+.slide-tag.flooring { background: rgba(121,85,72,0.3);   color: #d7a880; border: 1px solid rgba(215,168,128,0.3); }
+.slide-tag.furniture{ background: rgba(0,71,171,0.3);    color: #90caf9; border: 1px solid rgba(144,202,249,0.3); }
+
+.slide-content h2 {
+font-size: 2.4rem;
+line-height: 1.15;
+margin-bottom: 0.9rem;
+color: #fff;
+text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+}
+
+.slide-content p {
+font-size: 1rem;
+line-height: 1.65;
+color: rgba(255,255,255,0.82);
+margin-bottom: 1.75rem;
+max-width: 440px;
+}
+
+.slide-cta {
+display: inline-flex;
+align-items: center;
+gap: 0.6rem;
+text-decoration: none;
+font-weight: 700;
+font-size: 0.95rem;
+padding: 0.8rem 1.6rem;
+border-radius: 6px;
+transition: all 0.3s ease;
+letter-spacing: 0.02em;
+}
+.slide-cta.steel-btn     { background: #4a5568; color: #fff; }
+.slide-cta.electric-btn  { background: #ffd600; color: #1a1a00; }
+.slide-cta.flooring-btn  { background: #b2945e; color: #fff; }
+.slide-cta.furniture-btn { background: var(--primary-blue); color: #fff; }
+.slide-cta:hover { filter: brightness(1.1); transform: translateX(3px); }
+
+/* Navigation arrows */
+.carousel-arrow {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+z-index: 10;
+background: rgba(255,255,255,0.12);
+border: 1px solid rgba(255,255,255,0.2);
+color: #fff;
+width: 48px;
+height: 48px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+font-size: 1.25rem;
+transition: all 0.3s ease;
+backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
+}
+.carousel-arrow:hover {
+background: rgba(255,255,255,0.25);
+border-color: rgba(255,255,255,0.4);
+transform: translateY(-50%) scale(1.05);
+}
+.carousel-arrow:active { transform: translateY(-50%) scale(0.97); }
+.carousel-arrow.prev { left: 1.25rem; }
+.carousel-arrow.next { right: 1.25rem; }
+
+/* Dot indicators */
+.carousel-dots {
+position: absolute;
+bottom: 1.25rem;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 0.6rem;
+z-index: 10;
+}
+.carousel-dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background: rgba(255,255,255,0.35);
+border: 1px solid rgba(255,255,255,0.3);
+cursor: pointer;
+transition: all 0.3s ease;
+}
+.carousel-dot.active {
+background: #fff;
+width: 26px;
+border-radius: 4px;
+}
+
+/* Progress bar */
+.carousel-progress {
+position: absolute;
+bottom: 0;
+left: 0;
+height: 3px;
+background: rgba(255,255,255,0.15);
+width: 100%;
+z-index: 10;
+}
+.carousel-progress-bar {
+height: 100%;
+background: linear-gradient(90deg, #FFD700, #FFA500);
+width: 0%;
+transition: width 0.1s linear;
 }
 
 /* About Section */
@@ -755,6 +972,10 @@ border-radius: 12px;
 overflow: hidden;
 animation: slideDown 0.3s ease;
 }
+@keyframes slideDown {
+from { opacity: 0; transform: translateY(-20px); }
+to   { opacity: 1; transform: translateY(0); }
+}
 .search-modal-header {
 display: flex;
 justify-content: space-between;
@@ -821,150 +1042,87 @@ padding: 0 2px;
 
 /* Desktop Styles */
 @media (min-width: 969px) {
-.mobile-menu-btn {
-display: none;
-}
-.mobile-nav-overlay,
-.mobile-nav {
-display: none !important;
-}
-.nav-center {
-display: flex;
-}
-.hero {
-padding: 6rem 2rem;
-}
-.hero h1 {
-font-size: 3rem;
-}
-.hero p {
-font-size: 1.3rem;
-}
-.contact-content {
-grid-template-columns: 1fr 1fr;
-gap: 4rem;
-}
-.services-grid {
-grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
-.trust-content {
-grid-template-columns: repeat(4, 1fr);
-}
+.mobile-menu-btn { display: none; }
+.mobile-nav-overlay, .mobile-nav { display: none !important; }
+.nav-center { display: flex; }
+.hero { padding: 6rem 2rem; }
+.hero h1 { font-size: 3rem; }
+.hero p { font-size: 1.3rem; }
+.contact-content { grid-template-columns: 1fr 1fr; gap: 4rem; }
+.services-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.carousel-section { height: 500px; }
+.slide-content { padding: 3rem 3rem 3rem 5rem; }
+.slide-content h2 { font-size: 2.8rem; }
 }
 
 /* Mobile Styles */
 @media (max-width: 968px) {
-.nav-center {
-display: none;
+.nav-center { display: none; }
+.mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+.nav-right { gap: 0.5rem; }
+.auth-buttons { display: none; }
+.hero h1 { font-size: 1.85rem; }
+.hero p { font-size: 1.05rem; }
+.hero-buttons { flex-direction: column; width: 100%; }
+.btn-primary, .btn-secondary { width: 100%; }
+.about h2, .services h2, .contact h2 { font-size: 1.75rem; }
+.footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+.carousel-section { height: 420px; }
+.slide-content { padding: 2rem 1.5rem; max-width: 100%; }
+.slide-content h2 { font-size: 1.75rem; }
+.slide-overlay {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.55) 100%);
 }
-.mobile-menu-btn {
-display: flex;
-align-items: center;
-justify-content: center;
-}
-.nav-right {
-gap: 0.5rem;
-}
-.auth-buttons {
-display: none;
-}
-.hero h1 {
-font-size: 1.85rem;
-}
-.hero p {
-font-size: 1.05rem;
-}
-.hero-buttons {
-flex-direction: column;
-width: 100%;
-}
-.btn-primary, .btn-secondary {
-width: 100%;
-}
-.trust-content {
-grid-template-columns: repeat(2, 1fr);
-}
-.about h2,
-.services h2,
-.contact h2 {
-font-size: 1.75rem;
-}
-.footer-content {
-grid-template-columns: 1fr;
-gap: 1.5rem;
-}
+.carousel-arrow { width: 38px; height: 38px; font-size: 1rem; }
+.carousel-arrow.prev { left: 0.75rem; }
+.carousel-arrow.next { right: 0.75rem; }
 }
 
 @media (max-width: 640px) {
-nav {
-padding: 0.65rem 1rem;
-}
-.logo {
-font-size: 1.25rem;
-}
-.search-bar {
-max-width: 100%;
-}
-.hero {
-padding: 4rem 1rem 3rem;
-}
-.hero h1 {
-font-size: 1.65rem;
-}
-.trust-content {
-grid-template-columns: 1fr 1fr;
-gap: 1rem;
-}
-.badge {
-padding: 1.25rem 0.75rem;
-}
-.badge-icon {
-font-size: 1.75rem;
-}
-.about, .services, .contact {
-padding: 3rem 1rem;
-}
-.service-card {
-padding: 1.5rem;
-}
-.contact-form {
-padding: 1.5rem;
-}
-.footer {
-padding: 2.5rem 1rem 1.25rem;
-}
+nav { padding: 0.65rem 1rem; }
+.logo { font-size: 1.25rem; }
+.hero { padding: 4rem 1rem 3rem; }
+.hero h1 { font-size: 1.65rem; }
+.about, .services, .contact { padding: 3rem 1rem; }
+.service-card { padding: 1.5rem; }
+.contact-form { padding: 1.5rem; }
+.carousel-section { height: 380px; }
+.slide-content h2 { font-size: 1.5rem; }
+.slide-content p { font-size: 0.9rem; }
+.placeholder-icon { font-size: 4rem; }
 }
 </style>
 </head>
 <body>
+
 <!-- Header -->
 <header>
 <nav>
 <div class="nav-left">
-<a href="builder.html" class="logo">
-<span>🏗️</span>
-<span>BuildPro UK</span>
-</a>
+  <a href="builder.html" class="logo">
+    <span>🏗️</span>
+    <span>BuildPro UK</span>
+  </a>
 </div>
 <div class="nav-center">
-<div class="search-bar">
-<input type="text" id="globalSearch" placeholder="Search services, products...">
-<button onclick="performSearch()" aria-label="Search">🔍</button>
-</div>
+  <div class="search-bar">
+    <input type="text" id="globalSearch" placeholder="Search services, products...">
+    <button onclick="performSearch()" aria-label="Search">🔍</button>
+  </div>
 </div>
 <div class="nav-right">
-<ul class="nav-links">
-<li><a href="builder.html" class="active">Home</a></li>
-<li><a href="electrical.html">Electrical</a></li>
-<li><a href="steel.html">Steel</a></li>
-<li><a href="flooring.html">Flooring</a></li>
-<li><a href="furniture.html">Furniture</a></li>
-</ul>
-<div class="auth-buttons">
-<a href="loginpage.html" class="btn-login">Log In</a>
-<a href="signuppage.html" class="btn-signup">Sign Up</a>
-</div>
-<button class="mobile-menu-btn" aria-label="Open menu" onclick="toggleMobileNav()">☰</button>
+  <ul class="nav-links">
+    <li><a href="builder.html" class="active">Home</a></li>
+    <li><a href="electrical.html">Electrical</a></li>
+    <li><a href="steel.html">Steel</a></li>
+    <li><a href="flooring.html">Flooring</a></li>
+    <li><a href="furniture.html">Furniture</a></li>
+  </ul>
+  <div class="auth-buttons">
+    <a href="loginpage.html" class="btn-login">Log In</a>
+    <a href="signuppage.html" class="btn-signup">Sign Up</a>
+  </div>
+  <button class="mobile-menu-btn" aria-label="Open menu" onclick="toggleMobileNav()">☰</button>
 </div>
 </nav>
 </header>
@@ -973,58 +1131,133 @@ padding: 2.5rem 1rem 1.25rem;
 <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="toggleMobileNav()"></div>
 <div class="mobile-nav" id="mobileNav">
 <div class="mobile-nav-header">
-<h3>Menu</h3>
-<button class="close-mobile-nav" aria-label="Close menu" onclick="toggleMobileNav()">×</button>
+  <h3>Menu</h3>
+  <button class="close-mobile-nav" aria-label="Close menu" onclick="toggleMobileNav()">×</button>
 </div>
 <ul class="mobile-nav-links">
-<li><a href="builder.html" class="active">🏠 Home</a></li>
-<li><a href="electrical.html">⚡ Electrical</a></li>
-<li><a href="steel.html">🏗️ Steel</a></li>
-<li><a href="flooring.html">📐 Flooring</a></li>
-<li><a href="furniture.html">🛋️ Furniture</a></li>
+  <li><a href="builder.html" class="active">🏠 Home</a></li>
+  <li><a href="electrical.html">⚡ Electrical</a></li>
+  <li><a href="steel.html">🏗️ Steel</a></li>
+  <li><a href="flooring.html">📐 Flooring</a></li>
+  <li><a href="furniture.html">🛋️ Furniture</a></li>
 </ul>
 <div class="mobile-auth-buttons">
-<a href="loginpage.html" class="btn-login">Log In</a>
-<a href="signuppage.html" class="btn-signup">Sign Up</a>
+  <a href="loginpage.html" class="btn-login">Log In</a>
+  <a href="signuppage.html" class="btn-signup">Sign Up</a>
 </div>
 </div>
 
 <!-- Hero Section -->
 <section class="hero">
 <div class="hero-content">
-<h1>Reliable Building Services<br>Across the <span class="highlight">UK</span></h1>
-<p>Professional, insured, and trusted builders for every project — big or small. Get a FREE quote in 24 hours!</p>
-<div class="hero-buttons">
-<a href="#contact" class="btn-primary">Get FREE Quote</a>
-<a href="#services" class="btn-secondary">View Services</a>
-</div>
+  <h1>Reliable Building Services<br>Across the <span class="highlight">UK</span></h1>
+  <p>Professional, insured, and trusted builders for every project — big or small. Get a FREE quote in 24 hours!</p>
+  <div class="hero-buttons">
+    <a href="#contact" class="btn-primary">Get FREE Quote</a>
+    <a href="#services" class="btn-secondary">View Services</a>
+  </div>
 </div>
 </section>
 
-<!-- Trust Badges -->
-<section class="trust-badges">
-<div class="trust-content">
-<div class="badge">
-<div class="badge-icon">✓</div>
-<h3>Fully Insured</h3>
-<p>£5M public liability</p>
-</div>
-<div class="badge">
-<div class="badge-icon">⭐</div>
-<h3>5-Star Rated</h3>
-<p>Trusted by 500+ clients</p>
-</div>
-<div class="badge">
-<div class="badge-icon">🏆</div>
-<h3>Certified Tradesmen</h3>
-<p>All work guaranteed</p>
-</div>
-<div class="badge">
-<div class="badge-icon">💷</div>
-<h3>Price Match</h3>
-<p>Beat any written quote</p>
-</div>
-</div>
+<!-- =============================================
+     CAROUSEL SECTION (replaces trust badges)
+     ============================================= -->
+<section class="carousel-section" id="featuredCarousel" aria-label="Featured services carousel">
+
+  <!-- Slides -->
+  <div class="carousel-track" id="carouselTrack">
+
+    <!-- Slide 1 — Steel -->
+    <div class="carousel-slide" role="group" aria-label="Slide 1 of 4: Steel Construction">
+      <div class="slide-bg">
+        <div class="slide-image-placeholder">
+          <!-- Accent circles for depth -->
+          <div class="slide-accent-circle" style="width:500px;height:500px;background:#718096;top:-150px;right:-100px;"></div>
+          <div class="slide-accent-circle" style="width:300px;height:300px;background:#a0aec0;bottom:-80px;right:200px;"></div>
+          <div class="placeholder-icon">🏗️</div>
+          <div class="placeholder-label">Add your steel image here</div>
+        </div>
+      </div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <span class="slide-tag steel">Steel Construction</span>
+        <h2>Built to Last.<br>Built in Steel.</h2>
+        <p>Structural steel fabrication, RSJ beams, and commercial steel construction delivered to your exact specification anywhere in the UK.</p>
+        <a href="steel.html" class="slide-cta steel-btn">Explore Steel →</a>
+      </div>
+    </div>
+
+    <!-- Slide 2 — Electrical -->
+    <div class="carousel-slide" role="group" aria-label="Slide 2 of 4: Electrical Services">
+      <div class="slide-bg">
+        <div class="slide-image-placeholder">
+          <div class="slide-accent-circle" style="width:450px;height:450px;background:#f6e05e;top:-100px;right:-80px;opacity:0.08;"></div>
+          <div class="slide-accent-circle" style="width:250px;height:250px;background:#fbd38d;bottom:-60px;right:250px;opacity:0.06;"></div>
+          <div class="placeholder-icon">⚡</div>
+          <div class="placeholder-label">Add your electrical image here</div>
+        </div>
+      </div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <span class="slide-tag electric">Electrical Services</span>
+        <h2>Powering Homes &amp;<br>Businesses.</h2>
+        <p>From EV charging points to full rewires and smart home systems — our certified electricians handle every job safely and on time.</p>
+        <a href="electrical.html" class="slide-cta electric-btn">Explore Electrical →</a>
+      </div>
+    </div>
+
+    <!-- Slide 3 — Flooring -->
+    <div class="carousel-slide" role="group" aria-label="Slide 3 of 4: Flooring Solutions">
+      <div class="slide-bg">
+        <div class="slide-image-placeholder">
+          <div class="slide-accent-circle" style="width:480px;height:480px;background:#c05621;top:-130px;right:-90px;opacity:0.12;"></div>
+          <div class="slide-accent-circle" style="width:280px;height:280px;background:#d97706;bottom:-70px;right:220px;opacity:0.08;"></div>
+          <div class="placeholder-icon">📐</div>
+          <div class="placeholder-label">Add your flooring image here</div>
+        </div>
+      </div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <span class="slide-tag flooring">Flooring Solutions</span>
+        <h2>Floors That Make<br>a Statement.</h2>
+        <p>Solid oak, SPC rigid core, luxury vinyl, and bespoke tile — precision-fitted flooring solutions for every room and every budget.</p>
+        <a href="flooring.html" class="slide-cta flooring-btn">Explore Flooring →</a>
+      </div>
+    </div>
+
+    <!-- Slide 4 — Furniture -->
+    <div class="carousel-slide" role="group" aria-label="Slide 4 of 4: Furniture">
+      <div class="slide-bg">
+        <div class="slide-image-placeholder">
+          <div class="slide-accent-circle" style="width:460px;height:460px;background:#2b6cb0;top:-120px;right:-85px;opacity:0.12;"></div>
+          <div class="slide-accent-circle" style="width:270px;height:270px;background:#4299e1;bottom:-65px;right:230px;opacity:0.08;"></div>
+          <div class="placeholder-icon">🛋️</div>
+          <div class="placeholder-label">Add your furniture image here</div>
+        </div>
+      </div>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <span class="slide-tag furniture">Furniture</span>
+        <h2>Crafted for Your<br>Space.</h2>
+        <p>Handcrafted bespoke furniture, solid oak dining tables, fitted wardrobes, and expert restoration — made to your exact measurements.</p>
+        <a href="furniture.html" class="slide-cta furniture-btn">Explore Furniture →</a>
+      </div>
+    </div>
+
+  </div><!-- /carousel-track -->
+
+  <!-- Arrows -->
+  <button class="carousel-arrow prev" onclick="carouselMove(-1)" aria-label="Previous slide">&#8592;</button>
+  <button class="carousel-arrow next" onclick="carouselMove(1)"  aria-label="Next slide">&#8594;</button>
+
+  <!-- Dots -->
+  <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Slide navigation"></div>
+
+  <!-- Progress bar -->
+  <div class="carousel-progress">
+    <div class="carousel-progress-bar" id="progressBar"></div>
+  </div>
+
 </section>
 
 <!-- About Section -->
@@ -1033,278 +1266,344 @@ padding: 2.5rem 1rem 1.25rem;
 <p>We're a trusted team of professional builders serving clients across the United Kingdom. With over 15 years of experience in the construction industry, we pride ourselves on delivering exceptional craftsmanship, reliability, and customer service on every project.</p>
 <p>From small home repairs to large-scale extensions and renovations, our fully qualified and insured tradesmen bring expertise, attention to detail, and a commitment to quality that sets us apart.</p>
 <div class="trust-points">
-<div class="trust-point">
-<div class="trust-point-icon">✓</div>
-<div><h4>Fully Insured & Certified</h4><p>All our tradesmen are certified professionals.</p></div>
-</div>
-<div class="trust-point">
-<div class="trust-point-icon">⚡</div>
-<div><h4>Fast & Reliable Service</h4><p>We respect your time with punctual service.</p></div>
-</div>
-<div class="trust-point">
-<div class="trust-point-icon">💯</div>
-<div><h4>Quality Guaranteed</h4><p>Every job is backed by our workmanship guarantee.</p></div>
-</div>
-<div class="trust-point">
-<div class="trust-point-icon">💷</div>
-<div><h4>Transparent Pricing</h4><p>No hidden fees — clear, upfront quotes.</p></div>
-</div>
+  <div class="trust-point">
+    <div class="trust-point-icon">✓</div>
+    <div><h4>Fully Insured &amp; Certified</h4><p>All our tradesmen are certified professionals.</p></div>
+  </div>
+  <div class="trust-point">
+    <div class="trust-point-icon">⚡</div>
+    <div><h4>Fast &amp; Reliable Service</h4><p>We respect your time with punctual service.</p></div>
+  </div>
+  <div class="trust-point">
+    <div class="trust-point-icon">💯</div>
+    <div><h4>Quality Guaranteed</h4><p>Every job is backed by our workmanship guarantee.</p></div>
+  </div>
+  <div class="trust-point">
+    <div class="trust-point-icon">💷</div>
+    <div><h4>Transparent Pricing</h4><p>No hidden fees — clear, upfront quotes.</p></div>
+  </div>
 </div>
 </section>
 
 <!-- Services Section -->
 <section class="services" id="services">
 <div class="services-content">
-<h2>Our Building Services</h2>
-<p class="services-subtitle">From home extensions to property maintenance, we deliver professional building services across the UK.</p>
-<div class="services-grid">
-<div class="service-card">
-<span class="popular-badge">Most Popular</span>
-<div class="service-icon">🏠</div>
-<h3>Home Extensions</h3>
-<p>Add valuable space to your home with our expertly designed and constructed extensions.</p>
-<a href="#contact" class="service-link">Get Quote →</a>
-</div>
-<div class="service-card">
-<span class="popular-badge">Save £500</span>
-<div class="service-icon">🏗️</div>
-<h3>Loft Conversions</h3>
-<p>Transform your unused loft space into a beautiful, functional room.</p>
-<a href="#contact" class="service-link">Get Quote →</a>
-</div>
-<div class="service-card">
-<div class="service-icon">🛠️</div>
-<h3>Roofing & Repairs</h3>
-<p>Expert roofing services including new installations, repairs, and maintenance.</p>
-<a href="#contact" class="service-link">Get Quote →</a>
-</div>
-<div class="service-card">
-<span class="popular-badge">Quick</span>
-<div class="service-icon">🚿</div>
-<h3>Kitchens & Bathrooms</h3>
-<p>Complete kitchen and bathroom refurbishments tailored to your style and budget.</p>
-<a href="#contact" class="service-link">Get Quote →</a>
-</div>
-<div class="service-card">
-<div class="service-icon">🧱</div>
-<h3>General Building</h3>
-<p>Comprehensive building services for residential and commercial properties.</p>
-<a href="#contact" class="service-link">Get Quote →</a>
-</div>
-<div class="service-card">
-<div class="service-icon">🔧</div>
-<h3>Property Maintenance</h3>
-<p>Regular maintenance and repair services to keep your property in top condition.</p>
-<a href="#contact" class="service-link">Get Quote →</a>
-</div>
-</div>
+  <h2>Our Building Services</h2>
+  <p class="services-subtitle">From home extensions to property maintenance, we deliver professional building services across the UK.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="popular-badge">Most Popular</span>
+      <div class="service-icon">🏠</div>
+      <h3>Home Extensions</h3>
+      <p>Add valuable space to your home with our expertly designed and constructed extensions.</p>
+      <a href="#contact" class="service-link">Get Quote →</a>
+    </div>
+    <div class="service-card">
+      <span class="popular-badge">Save £500</span>
+      <div class="service-icon">🏗️</div>
+      <h3>Loft Conversions</h3>
+      <p>Transform your unused loft space into a beautiful, functional room.</p>
+      <a href="#contact" class="service-link">Get Quote →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛠️</div>
+      <h3>Roofing &amp; Repairs</h3>
+      <p>Expert roofing services including new installations, repairs, and maintenance.</p>
+      <a href="#contact" class="service-link">Get Quote →</a>
+    </div>
+    <div class="service-card">
+      <span class="popular-badge">Quick</span>
+      <div class="service-icon">🚿</div>
+      <h3>Kitchens &amp; Bathrooms</h3>
+      <p>Complete kitchen and bathroom refurbishments tailored to your style and budget.</p>
+      <a href="#contact" class="service-link">Get Quote →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧱</div>
+      <h3>General Building</h3>
+      <p>Comprehensive building services for residential and commercial properties.</p>
+      <a href="#contact" class="service-link">Get Quote →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔧</div>
+      <h3>Property Maintenance</h3>
+      <p>Regular maintenance and repair services to keep your property in top condition.</p>
+      <a href="#contact" class="service-link">Get Quote →</a>
+    </div>
+  </div>
 </div>
 </section>
 
 <!-- Contact Section -->
 <section class="contact" id="contact">
 <div class="contact-content">
-<div class="contact-info">
-<div>
-<h2>Get in Touch</h2>
-<p style="color: var(--text-gray); font-size: 1.05rem; margin-bottom: 1.5rem;">Ready to start your project? Contact us today for a free quote.</p>
-</div>
-<div class="contact-item">
-<div class="contact-icon">📞</div>
-<div><h4>Phone</h4><p>0800 123 4567</p><p>Mon-Fri: 8am-6pm, Sat: 9am-4pm</p></div>
-</div>
-<div class="contact-item">
-<div class="contact-icon">✉️</div>
-<div><h4>Email</h4><p>info@buildprouk.co.uk</p><p>We'll respond within 24 hours</p></div>
-</div>
-<div class="contact-item">
-<div class="contact-icon">📍</div>
-<div><h4>Service Areas</h4><p>London, Manchester, Birmingham,</p><p>Leeds, Liverpool & nationwide</p></div>
-</div>
-</div>
-<div class="contact-form">
-<form>
-<div class="form-group"><label for="name">Full Name</label><input type="text" id="name" name="name" required></div>
-<div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" required></div>
-<div class="form-group"><label for="phone">Phone Number</label><input type="tel" id="phone" name="phone" required></div>
-<div class="form-group"><label for="message">Project Details</label><textarea id="message" name="message" required placeholder="Tell us about your project..."></textarea></div>
-<button type="submit" class="submit-btn">Get Your FREE Quote</button>
-<div class="response-time">
-<span>⚡</span>
-<span>Average response time: Under 2 hours!</span>
-</div>
-</form>
-</div>
+  <div class="contact-info">
+    <div>
+      <h2>Get in Touch</h2>
+      <p style="color: var(--text-gray); font-size: 1.05rem; margin-bottom: 1.5rem;">Ready to start your project? Contact us today for a free quote.</p>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📞</div>
+      <div><h4>Phone</h4><p>0800 123 4567</p><p>Mon-Fri: 8am-6pm, Sat: 9am-4pm</p></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">✉️</div>
+      <div><h4>Email</h4><p>info@buildprouk.co.uk</p><p>We'll respond within 24 hours</p></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div><h4>Service Areas</h4><p>London, Manchester, Birmingham,</p><p>Leeds, Liverpool &amp; nationwide</p></div>
+    </div>
+  </div>
+  <div class="contact-form">
+    <form id="contactForm">
+      <div class="form-group"><label for="name">Full Name</label><input type="text" id="name" name="name" required></div>
+      <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" required></div>
+      <div class="form-group"><label for="phone">Phone Number</label><input type="tel" id="phone" name="phone" required></div>
+      <div class="form-group"><label for="message">Project Details</label><textarea id="message" name="message" required placeholder="Tell us about your project..."></textarea></div>
+      <button type="submit" class="submit-btn">Get Your FREE Quote</button>
+      <div class="response-time">
+        <span>⚡</span>
+        <span>Average response time: Under 2 hours!</span>
+      </div>
+    </form>
+  </div>
 </div>
 </section>
 
 <!-- Footer -->
 <footer>
 <div class="footer-content">
-<div class="footer-section">
-<h3>BuildPro UK</h3>
-<p style="color: rgba(255, 255, 255, 0.8); line-height: 1.7; margin-bottom: 1rem;">Your trusted partner for professional building services across the United Kingdom.</p>
-<div class="partner-site">
-<h4>Partner Sites</h4>
-<p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-bottom: 0.5rem;">Visit our specialized partners:</p>
-<a href="https://www.liveelectrical.co.uk" target="_blank">liveelectrical.co.uk</a><br>
-<a href="https://www.merrinton.com" target="_blank">merrinton.com</a>
-</div>
-</div>
-<div class="footer-section">
-<h3>Quick Links</h3>
-<ul>
-<li><a href="builder.html">Home</a></li>
-<li><a href="electrical.html">Electrical</a></li>
-<li><a href="steel.html">Steel</a></li>
-<li><a href="flooring.html">Flooring</a></li>
-<li><a href="furniture.html">Furniture</a></li>
-</ul>
-</div>
-<div class="footer-section">
-<h3>Account</h3>
-<ul>
-<li><a href="signuppage.html">Sign Up</a></li>
-<li><a href="loginpage.html">Log In</a></li>
-<li><a href="#">My Orders</a></li>
-<li><a href="#">Track Delivery</a></li>
-</ul>
-</div>
-<div class="footer-section">
-<h3>Contact</h3>
-<ul>
-<li><a href="tel:08001234567">0800 123 4567</a></li>
-<li><a href="mailto:info@buildprouk.co.uk">info@buildprouk.co.uk</a></li>
-</ul>
-</div>
+  <div class="footer-section">
+    <h3>BuildPro UK</h3>
+    <p style="color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1rem;">Your trusted partner for professional building services across the United Kingdom.</p>
+    <div class="partner-site">
+      <h4>Partner Sites</h4>
+      <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 0.5rem;">Visit our specialised partners:</p>
+      <a href="https://www.liveelectrical.co.uk" target="_blank">liveelectrical.co.uk</a><br>
+      <a href="https://www.merrinton.com" target="_blank">merrinton.com</a>
+    </div>
+  </div>
+  <div class="footer-section">
+    <h3>Quick Links</h3>
+    <ul>
+      <li><a href="builder.html">Home</a></li>
+      <li><a href="electrical.html">Electrical</a></li>
+      <li><a href="steel.html">Steel</a></li>
+      <li><a href="flooring.html">Flooring</a></li>
+      <li><a href="furniture.html">Furniture</a></li>
+    </ul>
+  </div>
+  <div class="footer-section">
+    <h3>Account</h3>
+    <ul>
+      <li><a href="signuppage.html">Sign Up</a></li>
+      <li><a href="loginpage.html">Log In</a></li>
+      <li><a href="#">My Orders</a></li>
+      <li><a href="#">Track Delivery</a></li>
+    </ul>
+  </div>
+  <div class="footer-section">
+    <h3>Contact</h3>
+    <ul>
+      <li><a href="tel:08001234567">0800 123 4567</a></li>
+      <li><a href="mailto:info@buildprouk.co.uk">info@buildprouk.co.uk</a></li>
+    </ul>
+  </div>
 </div>
 <div class="footer-bottom">
-<p>&copy; 2026 BuildPro UK. All rights reserved.</p>
+  <p>&copy; 2026 BuildPro UK. All rights reserved.</p>
 </div>
 </footer>
 
 <!-- Search Modal -->
 <div id="searchModal" class="search-modal">
 <div class="search-modal-content">
-<div class="search-modal-header">
-<h3>Search Results</h3>
-<button class="close-search" onclick="closeSearch()" aria-label="Close search">×</button>
-</div>
-<div id="searchResults" class="search-results"></div>
+  <div class="search-modal-header">
+    <h3>Search Results</h3>
+    <button class="close-search" onclick="closeSearch()" aria-label="Close search">×</button>
+  </div>
+  <div id="searchResults" class="search-results"></div>
 </div>
 </div>
 
 <script>
-// Mobile Navigation Toggle
+/* ============================================================
+   MOBILE NAV
+   ============================================================ */
 function toggleMobileNav() {
-const mobileNav = document.getElementById('mobileNav');
-const mobileOverlay = document.getElementById('mobileNavOverlay');
-const body = document.body;
-
-mobileNav.classList.toggle('active');
-mobileOverlay.classList.toggle('active');
-
-if (mobileNav.classList.contains('active')) {
-body.style.overflow = 'hidden';
-} else {
-body.style.overflow = 'auto';
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileOverlay = document.getElementById('mobileNavOverlay');
+  mobileNav.classList.toggle('active');
+  mobileOverlay.classList.toggle('active');
+  document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : 'auto';
 }
-}
-
-// Close mobile nav when clicking a link
 document.querySelectorAll('.mobile-nav-links a').forEach(link => {
-link.addEventListener('click', () => {
-toggleMobileNav();
-});
+  link.addEventListener('click', toggleMobileNav);
 });
 
-// Search Data
+/* ============================================================
+   CAROUSEL
+   ============================================================ */
+(function () {
+  const TOTAL   = 4;
+  const DELAY   = 5000; // ms per slide
+  const TICK    = 50;   // progress bar refresh
+  let current   = 0;
+  let timer     = null;
+  let progress  = 0;
+
+  const track   = document.getElementById('carouselTrack');
+  const dotsEl  = document.getElementById('carouselDots');
+  const barEl   = document.getElementById('progressBar');
+
+  /* Build dots */
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    d.setAttribute('role', 'tab');
+    d.dataset.index = i;
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+
+  function updateDots() {
+    dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function goTo(index) {
+    current = ((index % TOTAL) + TOTAL) % TOTAL;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    updateDots();
+    resetTimer();
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    progress = 0;
+    barEl.style.width = '0%';
+    timer = setInterval(() => {
+      progress += (TICK / DELAY) * 100;
+      barEl.style.width = Math.min(progress, 100) + '%';
+      if (progress >= 100) {
+        goTo(current + 1);
+      }
+    }, TICK);
+  }
+
+  /* Expose arrow handler */
+  window.carouselMove = function (dir) { goTo(current + dir); };
+
+  /* Touch / swipe support */
+  let touchStartX = 0;
+  const section = document.getElementById('featuredCarousel');
+  section.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+  section.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+
+  /* Pause on hover */
+  section.addEventListener('mouseenter', () => clearInterval(timer));
+  section.addEventListener('mouseleave', resetTimer);
+
+  /* Keyboard */
+  section.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  /* Start */
+  resetTimer();
+})();
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
 const searchData = [
-{ category: 'Service', title: 'Home Extensions', description: 'Add valuable space to your home with our expertly designed extensions.', link: '#contact', keywords: ['extension', 'home', 'space', 'building'] },
-{ category: 'Service', title: 'Loft Conversions', description: 'Transform your unused loft space into a beautiful, functional room.', link: '#contact', keywords: ['loft', 'attic', 'conversion', 'bedroom'] },
-{ category: 'Service', title: 'Roofing & Repairs', description: 'Expert roofing services including new installations and repairs.', link: '#contact', keywords: ['roof', 'repair', 'tiles', 'leak'] },
-{ category: 'Service', title: 'Kitchens & Bathrooms', description: 'Complete kitchen and bathroom refurbishments tailored to your style.', link: '#contact', keywords: ['kitchen', 'bathroom', 'renovation'] },
-{ category: 'Service', title: 'Electrical Services', description: 'Professional electrical installations, repairs, and premium products.', link: 'electrical.html', keywords: ['electrical', 'electrician', 'wiring', 'power'] },
-{ category: 'Service', title: 'Steel Construction', description: 'Steel fabrication, structural work, and metal construction services.', link: 'steel.html', keywords: ['steel', 'metal', 'structural', 'fabrication'] },
-{ category: 'Service', title: 'Flooring Solutions', description: 'Expert flooring installation, repair, and finishing solutions.', link: 'flooring.html', keywords: ['flooring', 'floor', 'tiles', 'hardwood'] },
-{ category: 'Service', title: 'Furniture Services', description: 'Custom furniture building, installation, and restoration services.', link: 'furniture.html', keywords: ['furniture', 'custom', 'building', 'restoration'] },
-{ category: 'Product', title: 'EV Charging Station', description: '7.3KW AC electric vehicle charging station with Type 2 cable.', price: '£899.99', link: 'electrical.html', keywords: ['ev', 'charging', 'electric vehicle'] },
-{ category: 'Product', title: 'RSJ Universal Beam', description: 'Hot-rolled steel universal beam, S355 grade steel.', link: 'steel.html', keywords: ['rsj', 'beam', 'steel', 'structural'] },
-{ category: 'Product', title: 'Kingsley Oak Flooring', description: 'Timeless natural oak finish with warm honey tones. SPC Rigid Core.', sku: '5984', link: 'flooring.html', keywords: ['oak', 'flooring', 'spc', 'wood'] },
-{ category: 'Product', title: 'Solid Oak Dining Table', description: 'Handcrafted solid oak dining table. Seats 6-8 people.', sku: 'FUR-DT-OAK-180', link: 'furniture.html', keywords: ['oak', 'dining', 'table', 'furniture'] },
-{ category: 'Information', title: 'About BuildPro UK', description: 'Learn about our 15+ years of experience in the construction industry.', link: '#about', keywords: ['about', 'company', 'experience'] },
-{ category: 'Information', title: 'Contact Us', description: 'Get in touch for a free quote. Phone: 0800 123 4567', link: '#contact', keywords: ['contact', 'phone', 'email', 'quote'] }
+  { category:'Service',     title:'Home Extensions',      description:'Add valuable space to your home with our expertly designed extensions.',          link:'#contact',       keywords:['extension','home','space','building'] },
+  { category:'Service',     title:'Loft Conversions',     description:'Transform your unused loft space into a beautiful, functional room.',             link:'#contact',       keywords:['loft','attic','conversion','bedroom'] },
+  { category:'Service',     title:'Roofing & Repairs',    description:'Expert roofing services including new installations and repairs.',                link:'#contact',       keywords:['roof','repair','tiles','leak'] },
+  { category:'Service',     title:'Kitchens & Bathrooms', description:'Complete kitchen and bathroom refurbishments tailored to your style.',            link:'#contact',       keywords:['kitchen','bathroom','renovation'] },
+  { category:'Service',     title:'Electrical Services',  description:'Professional electrical installations, repairs, and premium products.',           link:'electrical.html',keywords:['electrical','electrician','wiring','power'] },
+  { category:'Service',     title:'Steel Construction',   description:'Steel fabrication, structural work, and metal construction services.',            link:'steel.html',     keywords:['steel','metal','structural','fabrication'] },
+  { category:'Service',     title:'Flooring Solutions',   description:'Expert flooring installation, repair, and finishing solutions.',                  link:'flooring.html',  keywords:['flooring','floor','tiles','hardwood'] },
+  { category:'Service',     title:'Furniture Services',   description:'Custom furniture building, installation, and restoration services.',              link:'furniture.html', keywords:['furniture','custom','building','restoration'] },
+  { category:'Product',     title:'EV Charging Station',  description:'7.3KW AC electric vehicle charging station with Type 2 cable.',   price:'£899.99',link:'electrical.html',keywords:['ev','charging','electric vehicle'] },
+  { category:'Product',     title:'RSJ Universal Beam',   description:'Hot-rolled steel universal beam, S355 grade steel.',                             link:'steel.html',     keywords:['rsj','beam','steel','structural'] },
+  { category:'Product',     title:'Kingsley Oak Flooring',description:'Timeless natural oak finish with warm honey tones. SPC Rigid Core.', sku:'5984',link:'flooring.html',  keywords:['oak','flooring','spc','wood'] },
+  { category:'Product',     title:'Solid Oak Dining Table',description:'Handcrafted solid oak dining table. Seats 6-8 people.',  sku:'FUR-DT-OAK-180',link:'furniture.html',keywords:['oak','dining','table','furniture'] },
+  { category:'Information', title:'About BuildPro UK',    description:'Learn about our 15+ years of experience in the construction industry.',          link:'#about',         keywords:['about','company','experience'] },
+  { category:'Information', title:'Contact Us',           description:'Get in touch for a free quote. Phone: 0800 123 4567',                            link:'#contact',       keywords:['contact','phone','email','quote'] }
 ];
 
 function performSearch() {
-const searchTerm = document.getElementById('globalSearch').value.toLowerCase().trim();
-if (!searchTerm) { alert('Please enter a search term'); return; }
-const results = searchData.filter(item => {
-return item.title.toLowerCase().includes(searchTerm) ||
-item.description.toLowerCase().includes(searchTerm) ||
-item.keywords.some(keyword => keyword.includes(searchTerm)) ||
-item.category.toLowerCase().includes(searchTerm);
-});
-displaySearchResults(results, searchTerm);
+  const term = document.getElementById('globalSearch').value.toLowerCase().trim();
+  if (!term) { alert('Please enter a search term'); return; }
+  const results = searchData.filter(item =>
+    item.title.toLowerCase().includes(term) ||
+    item.description.toLowerCase().includes(term) ||
+    item.keywords.some(k => k.includes(term)) ||
+    item.category.toLowerCase().includes(term)
+  );
+  displaySearchResults(results, term);
 }
 
-function displaySearchResults(results, searchTerm) {
-const modal = document.getElementById('searchModal');
-const resultsContainer = document.getElementById('searchResults');
-if (results.length === 0) {
-resultsContainer.innerHTML = '<div class="no-results"><h3>🔍 No Results Found</h3><p>Try searching for: extensions, electrical, steel, flooring, furniture, etc.</p></div>';
-} else {
-resultsContainer.innerHTML = results.map(result => `
-<div class="search-result-item" onclick="navigateTo('${result.link}')">
-<div>
-<div class="search-result-category">${result.category}${result.price ? ` · ${result.price}` : ''}${result.sku ? ` · SKU: ${result.sku}` : ''}</div>
-<div class="search-result-title">${highlightText(result.title, searchTerm)}</div>
-<div class="search-result-description">${highlightText(result.description, searchTerm)}</div>
-</div>
-</div>
-`).join('');
-}
-modal.classList.add('active');
-document.body.style.overflow = 'hidden';
+function displaySearchResults(results, term) {
+  const modal = document.getElementById('searchModal');
+  const container = document.getElementById('searchResults');
+  container.innerHTML = results.length === 0
+    ? '<div class="no-results"><h3>🔍 No Results Found</h3><p>Try: extensions, electrical, steel, flooring, furniture…</p></div>'
+    : results.map(r => `
+      <div class="search-result-item" onclick="navigateTo('${r.link}')">
+        <div>
+          <div class="search-result-category">${r.category}${r.price ? ' · ' + r.price : ''}${r.sku ? ' · SKU: ' + r.sku : ''}</div>
+          <div class="search-result-title">${hl(r.title, term)}</div>
+          <div class="search-result-description">${hl(r.description, term)}</div>
+        </div>
+      </div>`).join('');
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
-function highlightText(text, searchTerm) {
-const regex = new RegExp(`(${searchTerm})`, 'gi');
-return text.replace(regex, '<span class="highlight-text">$1</span>');
+function hl(text, term) {
+  return text.replace(new RegExp('(' + term + ')', 'gi'), '<span class="highlight-text">$1</span>');
 }
 
 function navigateTo(link) {
-if (link.startsWith('#')) {
-const target = document.querySelector(link);
-if (target) { closeSearch(); target.scrollIntoView({ behavior: 'smooth' }); }
-} else { window.location.href = link; }
+  if (link.startsWith('#')) {
+    const el = document.querySelector(link);
+    if (el) { closeSearch(); el.scrollIntoView({ behavior: 'smooth' }); }
+  } else { window.location.href = link; }
 }
 
 function closeSearch() {
-document.getElementById('searchModal').classList.remove('active');
-document.body.style.overflow = 'auto';
-document.getElementById('globalSearch').value = '';
+  document.getElementById('searchModal').classList.remove('active');
+  document.body.style.overflow = 'auto';
+  document.getElementById('globalSearch').value = '';
 }
 
-document.getElementById('searchModal').addEventListener('click', function(e) {
-if (e.target === this) closeSearch();
+document.getElementById('searchModal').addEventListener('click', function (e) {
+  if (e.target === this) closeSearch();
+});
+document.getElementById('globalSearch').addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') performSearch();
 });
 
-document.getElementById('globalSearch').addEventListener('keypress', function(e) {
-if (e.key === 'Enter') performSearch();
+/* ============================================================
+   CONTACT FORM
+   ============================================================ */
+document.getElementById('contactForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  alert("Thank you for your enquiry! We'll get back to you within 24 hours.");
+  this.reset();
 });
 
-// Form submission
-document.querySelector('.contact-form form').addEventListener('submit', function(e) {
-e.preventDefault();
-alert('Thank you for your enquiry! We\'ll get back to you within 24 hours.');
-this.reset();
-});
-
-// Prevent double-tap zoom on iOS
-document.addEventListener('dblclick', function(event) {
-event.preventDefault();
-}, { passive: false });
+/* Prevent double-tap zoom on iOS */
+document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
 </script>
 </body>
 </html>
